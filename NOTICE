@@ -1,0 +1,37 @@
+omp-purge
+Copyright 2026 maple323
+
+This product is a derivative work. Portions are derived from:
+
+  dsh-purge
+  Copyright 2026 YuJunZhiXue
+  Source: https://github.com/YuJunZhiXue/dsh-purge
+  Licensed under the Apache License, Version 2.0.
+
+This fork of dsh-purge (https://github.com/maple323/dsh-purge) adapts its
+algorithms to the Oh My Pi (OMP) coding agent as a native TypeScript extension.
+
+Ported / adapted modules (mapping to upstream dsh-purge sources):
+
+  upstream lib/rules.js               -> src/rules/store.ts
+                                         src/rules/activate.ts
+                                         src/rules/cwd-scan.ts
+  upstream lib/net-scope.js           -> src/gate/net-scope.ts
+                                         src/gate/hooks.ts
+  upstream lib/capability-protocol.js -> src/capability.ts
+  upstream lib/table-key.js           -> src/inject/crypto.ts
+  upstream lib/table-read.js          -> src/inject/crypto.ts
+  upstream lib/core.js
+    (normalizeOverride / hashOverride
+     / resolveInjectText / readPromptInjectFileSync)
+                                      -> src/inject/resolve.ts
+                                         src/paths.ts
+  upstream lib/default-prompt-inject.zh.md
+                                      -> src/inject/default-prompt.zh.md
+                                         (default injected prompt)
+
+Not ported (DSH-specific, no OMP equivalent):
+  host JS source patching (ALL_PATCHES), shim injection, host restart,
+  update checks, the Cordis web/desktop dock UI.
+
+dsh-purge is distributed WITHOUT ANY WARRANTY. See LICENSE.
