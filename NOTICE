@@ -8,11 +8,25 @@ This product is a derivative work. Portions are derived from:
   Source: https://github.com/YuJunZhiXue/dsh-purge
   Licensed under the Apache License, Version 2.0.
 
-This fork of dsh-purge (https://github.com/maple323/dsh-purge) adapts its
-algorithms to the Oh My Pi (OMP) coding agent as a native TypeScript extension.
+  Source of: the prompt injection chain, the rule sets, the network gate,
+  the capability protocol, and the sealed-slot codec.
 
-Ported / adapted modules (mapping to upstream dsh-purge sources):
+  pi-purge
+  Copyright ZiChuanLan
+  Source: https://github.com/ZiChuanLan/pi-purge
+  Licensed under the MIT License.
 
+  Source of: the /purge command concept, the three composition modes
+  (append / replace / strict), the per-session toggle, and the
+  "identity segment stripped / fall back to append when unmatched" behavior.
+
+This project adapts both upstreams to the Oh My Pi (OMP) coding agent as a
+native TypeScript extension. It replaces neither upstream's host layer; the
+"Not ported" list below records what has no OMP equivalent.
+
+Ported / adapted modules (mapping to upstream sources):
+
+  dsh-purge:
   upstream lib/rules.js               -> src/rules/store.ts
                                          src/rules/activate.ts
                                          src/rules/cwd-scan.ts
@@ -28,10 +42,17 @@ Ported / adapted modules (mapping to upstream dsh-purge sources):
                                          src/paths.ts
   upstream lib/default-prompt-inject.zh.md
                                       -> src/inject/default-prompt.zh.md
-                                         (default injected prompt)
+                                         (sealed into src/inject/slot-table.ts)
+
+  pi-purge:
+  /purge command + append/replace/strict composition
+                                      -> src/mode.ts
+                                         src/command/purge.ts
+  per-session toggle / purge status   -> src/command/purge.ts
+                                         src/mode.ts
 
 Not ported (DSH-specific, no OMP equivalent):
   host JS source patching (ALL_PATCHES), shim injection, host restart,
   update checks, the Cordis web/desktop dock UI.
 
-dsh-purge is distributed WITHOUT ANY WARRANTY. See LICENSE.
+Both upstream works are distributed WITHOUT ANY WARRANTY. See LICENSE.

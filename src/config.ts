@@ -4,11 +4,16 @@
  */
 import { agentDir, projectOmpDir, readText } from "./paths.ts";
 import path from "node:path";
+import type { PurgeMode } from "./mode.ts";
 
 export interface PurgeConfig {
   enabled: boolean;
   /** 启动时把哪条规则同步到 <project>/.omp/AGENTS.md（空=不自动同步）。 */
   activeRule: string | null;
+  /** 默认合成模式（可被 /purge mode 与 --purge-mode 覆盖）。 */
+  mode: PurgeMode;
+  /** 默认提示词来源：`chain` | `embedded` | 文件路径（可被 /purge source 覆盖）。 */
+  source: string;
   /** 按模型 role 覆盖提示词；键为 role 名（default/smol/slow/plan/...），"*" 为兜底。 */
   rolePrompts: Record<string, string>;
   /** role → 模型 id 子串 的映射，用于从 ctx.model 反推 role。 */
@@ -23,6 +28,8 @@ export interface PurgeConfig {
 export const DEFAULT_CONFIG: PurgeConfig = {
   enabled: true,
   activeRule: null,
+  mode: "append",
+  source: "chain",
   rolePrompts: {},
   modelRoles: {},
   capabilityProtocol: true,

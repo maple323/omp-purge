@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "activeRule": "redteam",
+  "mode": "append",
+  "source": "chain",
+  "capabilityProtocol": true,
+  "gate": true,
+  "verbose": false
+}

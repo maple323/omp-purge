@@ -1,7 +1,7 @@
 {
   "name": "omp-purge",
-  "version": "0.1.0",
-  "description": "Oh My Pi (OMP) 破甲扩展：prompt 注入链、规则集、网络门禁，按 model role 路由提示词。Port of dsh-purge for OMP.",
+  "version": "1.0.0",
+  "description": "Oh My Pi (OMP) 破甲扩展：/purge 三模式换系统提示词、prompt 注入链、规则集、网络门禁、按 model role 路由。Port of dsh-purge + pi-purge to OMP.",
   "type": "module",
   "main": "index.ts",
   "exports": {
@@ -11,6 +11,7 @@
   "files": [
     "index.ts",
     "src",
+    "!src/inject/default-prompt.zh.md",
     "presets",
     "docs",
     "README.md",
@@ -21,21 +22,31 @@
   "keywords": [
     "omp",
     "oh-my-pi",
+    "pi-coding-agent",
     "extension",
-    "red-team",
+    "system-prompt",
     "prompt-inject",
+    "red-team",
     "llm-security"
   ],
   "license": "Apache-2.0",
+  "homepage": "https://github.com/maple323/omp-purge#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maple323/omp-purge.git"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.18"
   },
   "scripts": {
     "test": "node --test \"test/**/*.test.mjs\"",
-    "seal-prompt": "node scripts/seal-default-prompt.mjs"
+    "typecheck": "tsc --noEmit",
+    "seal-prompt": "node scripts/seal-default-prompt.mjs",
+    "e2e": "node scripts/e2e-omp.mjs",
+    "e2e:check": "node scripts/e2e-omp.mjs --check-only"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.3"
   }
 }
