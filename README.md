@@ -186,6 +186,11 @@ independent signals:
 because it depends on the model complying. Pass `--strict-marker` to require
 both, and `OMP_E2E_SHOW_LOG=1` to print the matched log lines.
 
+One environment caveat: if your user-level `<agentDir>/purge/config.json`
+defines `rolePrompts` (including `"*"`), that override outranks the temp
+project's `prompt-inject.md`, so the marker echo is expected to miss while the
+inject log still passes. The log's `source=` field names the layer that won.
+
 ## Sealing the default prompt
 
 The built-in default prompt ships as a sealed slot, not plaintext:

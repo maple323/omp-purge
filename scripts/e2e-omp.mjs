@@ -10,6 +10,10 @@
  * 因此 CI 只应使用 `--check-only`：它只做临时目录准备、扩展拷贝、二进制定位与
  * 命令行 dry-run，绝不 spawn omp、绝不联网。
  *
+ * 已知环境差异：若用户级 <agentDir>/purge/config.json 配了 rolePrompts（含 "*"），
+ * 它优先于临时项目的 prompt-inject.md，marker 回显会 MISS。此时 PASS 仍由 inject
+ * 日志成立；日志里的 source= 字段会告诉你实际生效的是哪一层（role / prompt / default）。
+ *
  * 运行：
  *   node scripts/e2e-omp.mjs --check-only     # 安全，不联网
  *   node scripts/e2e-omp.mjs                  # 真实调用一次模型

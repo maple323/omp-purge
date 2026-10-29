@@ -180,6 +180,10 @@ CLI。它报告**两个独立信号**：
 `RESULT: PASS` 以 inject 日志为准；marker 回显单独报告，因为那取决于模型是否配合。
 加 `--strict-marker` 要求两者都过，加 `OMP_E2E_SHOW_LOG=1` 打印命中的日志行。
 
+一个环境差异：若你的**用户级** `<agentDir>/purge/config.json` 配了 `rolePrompts`（含 `"*"`），
+它会压过临时项目的 `prompt-inject.md`，此时 marker 回显预期 MISS，而 inject 日志仍然成立；
+日志里的 `source=` 会指出实际生效的是哪一层。
+
 ## 密封默认 prompt
 
 内置默认 prompt 以密封槽形式发布，而不是明文：
