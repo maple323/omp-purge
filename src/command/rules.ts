@@ -47,7 +47,7 @@ interface CommandContext {
 
 interface CommandRegistration {
   description?: string;
-  getArgumentCompletions?: (partial: string) => string[] | undefined;
+  getArgumentCompletions?: (partial: string) => { value: string; label: string }[] | null;
   handler: (args: string, ctx: CommandContext) => Promise<void> | void;
 }
 
@@ -89,12 +89,12 @@ export function registerRulesCommand(pi: AnyExtensionAPI, opts: RulesCommandOpti
 
   pi.registerCommand("rules", {
     description: "omp-purge 规则集：list / use / create / delete / reset / help",
-    getArgumentCompletions(partial: string): string[] | undefined {
+    getArgumentCompletions(partial: string): { value: string; label: string }[] | null {
       const p = partial.trim();
       // 只补全第一个词（子命令）；补全回调拿不到 ctx/cwd，规则 id 不在此补全。
-      if (p.includes(" ")) return undefined;
+      if (p.includes(" ")) return null;
       const hits = SUBCOMMANDS.filter((s) => s.startsWith(p.toLowerCase()));
-      return hits.length > 0 ? [...hits] : undefined;
+      return hits.length > 0 ? hits.map((value) => ({ value, label: value })) : null;
     },
     async handler(args: string, ctx: CommandContext): Promise<void> {
       const notify = makeNotify(ctx, log, warn);

@@ -25,7 +25,7 @@ export interface PurgeCommandHost {
     name: string,
     options: {
       description?: string;
-      getArgumentCompletions?: (partial: string) => string[] | undefined;
+      getArgumentCompletions?: (partial: string) => { value: string; label: string }[] | null;
       handler: (args: string, ctx: any) => Promise<void> | void;
     },
   ): void;
@@ -137,7 +137,7 @@ export function registerPurgeCommand(pi: PurgeCommandHost, deps: PurgeCommandDep
       const p = String(partial || "").trim().toLowerCase();
       const all = [...SUBCOMMANDS, ...PURGE_MODES, "chain", "embedded"];
       const hits = all.filter((c) => c.startsWith(p));
-      return hits.length ? hits : undefined;
+      return hits.length ? hits.map((value) => ({ value, label: value })) : null;
     },
     handler: async (args: string, ctx: any) => {
       try {

@@ -30,7 +30,8 @@ interface FlagOptions {
 
 interface CommandOptions {
   description?: string;
-  getArgumentCompletions?: (partial: string) => string[] | undefined;
+  /** omp contract: AutocompleteItem[] — { value, label }, never bare strings. */
+  getArgumentCompletions?: (partial: string) => { value: string; label: string }[] | null;
   handler: (args: string, ctx: any) => Promise<void> | void;
 }
 
